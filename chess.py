@@ -33,6 +33,8 @@ class Chess():
             ['1', 'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r']
         ])
 
+        print("The board as been reset")
+
     def print_control_guide() -> None:
         """
         Prints the control guide to the display terminal. Takes no arguemnts.
@@ -46,21 +48,37 @@ class Chess():
         print("-------------")
         print("Choose the piece you wish to move when prompted, make sure the case type matches your player type.")
         print("Enter the square you wish to move that piece to.", end="\n\n")
-        print("Other Commands:")
+        print("When prompted to chose a piece to move, you may enter any one of the commands below instead...", end = "\n\n")
+        print("Commands:")
         print(Colours.BOLD + "CASTLE" + Colours.ENDC + " - when you wish to castle your king.")
         print(Colours.BOLD + "MOVES" + Colours.ENDC + " - prints a list of all previous moves.")
-        print(Colours.BOLD + "PRINT" + Colours.ENDC + " - prints the current board to terminal.")
+        print(Colours.BOLD + "BOARD" + Colours.ENDC + " - prints the current board to terminal.")
         print(Colours.BOLD + "GUIDE" + Colours.ENDC + " - prints the control guide to terminal.", end = "\n\n")
+    
+    def print_moves(self) -> None:
+        pass
+
+    def print_board(self) -> None:
+        print(self.board, end = "\n\n")
 
     def move_piece(self) -> None:
         pass
 
     def play(self) -> None:
-        pass
-    
+        """
+        Runs a game of chess in the terminal.
+        """
+        commands = {"MOVES": self.print_moves, "BOARD": self.print_board,
+                    "GUIDE": Chess.print_control_guide}
+        player_number = 1
 
+        Chess.print_control_guide()
+
+        while True:
+            break
+    
     
 
 
 if __name__ == "__main__":
-    pass
+    Chess.print_control_guide()
