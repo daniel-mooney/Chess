@@ -71,7 +71,7 @@ class Chess():
         """
         Runs a game of chess in the terminal.
         """
-        # CASTLE is a special movement related command and hence is not included in the command dict,
+        # CASTLE is a special movement related command and hence is not included in the command dictionary,
         # instead being handled with the rest of movements
         commands = {"MOVES": self.print_moves, "GUIDE": Chess.print_control_guide,
                     "RESET": self.reset_board, "QUIT": None}
@@ -98,7 +98,7 @@ class Chess():
             else:
                 move_coord = input("Move piece where: ")
             
-            valid_move =  self.move_piece(start_coord, move_coord, player_number)
+            valid_move = self.move_piece(start_coord, move_coord, player_number)
 
             if valid_move:
                 player_number = 2 if player_number == 1 else 1
