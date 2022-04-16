@@ -35,7 +35,7 @@ class Chess():
 
         self.moves = []
 
-        print("The game has been reset")
+        print("The game has been reset!")
 
     def print_control_guide() -> None:
         """
@@ -64,7 +64,7 @@ class Chess():
     def print_board(self) -> None:
         print(self.board, end = "\n\n")
 
-    def move_piece(self) -> None:
+    def move_piece(self, start_coord: str, move_coord: str, player: int) -> bool:
         pass
 
     def play(self) -> None:
@@ -82,20 +82,30 @@ class Chess():
         while True:
             self.print_board()
 
-            current_coord = input("Chose a piece to move: ")
-            current_coord = current_coord.upper()
+            start_coord = input("Chose a piece to move: ")
+            start_coord = start_coord.upper()
 
-            if current_coord in commands:
-                if current_coord == "QUIT":
+            if start_coord in commands:
+                if start_coord == "QUIT":
                     print("Exiting game...")
                     break
 
-                commands[current_coord]()
+                commands[start_coord]()
                 continue
 
+            if start_coord == "CASTLE":
+                move_coord = input("King (K) or Queen (Q) side: ")
+            else:
+                move_coord = input("Move piece where: ")
             
+            valid_move =  self.move_piece(start_coord, move_coord, player_number)
 
-    
+            if valid_move:
+                player_number = 2 if player_number == 1 else 1
+            else:
+                print(f"Player {player_number} pleaes try again...")
+
+             
     
 def main() -> None:
     game = Chess()
