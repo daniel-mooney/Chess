@@ -33,7 +33,9 @@ class Chess():
             ['1', 'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r']
         ])
 
-        print("The board as been reset")
+        self.moves = []
+
+        print("The game has been reset")
 
     def print_control_guide() -> None:
         """
@@ -42,7 +44,7 @@ class Chess():
 
         key = 'Key: R - Rook, N - Knight, B - Bishop, K - King, Q - Queen, P - Pawn.'
 
-        print('Lowercase is player 1, uppercase is player 2, player 1 goes first.')
+        print('\nLowercase is player 1, uppercase is player 2, player 1 goes first.')
         print(key, end = '\n\n')
         print(Colours.BOLD + Colours.GREEN + "Control Guide" + Colours.ENDC)
         print("-------------")
@@ -52,7 +54,8 @@ class Chess():
         print("Commands:")
         print(Colours.BOLD + "CASTLE" + Colours.ENDC + " - when you wish to castle your king.")
         print(Colours.BOLD + "MOVES" + Colours.ENDC + " - prints a list of all previous moves.")
-        print(Colours.BOLD + "BOARD" + Colours.ENDC + " - prints the current board to terminal.")
+        print(Colours.BOLD + "QUIT" + Colours.ENDC + " - ends the current game and closes the program.")
+        print(Colours.BOLD + "RESET" + Colours.ENDC + " - resets the current game being played.")
         print(Colours.BOLD + "GUIDE" + Colours.ENDC + " - prints the control guide to terminal.", end = "\n\n")
     
     def print_moves(self) -> None:
@@ -68,17 +71,35 @@ class Chess():
         """
         Runs a game of chess in the terminal.
         """
-        commands = {"MOVES": self.print_moves, "BOARD": self.print_board,
-                    "GUIDE": Chess.print_control_guide}
-        player_number = 1
+        # CASTLE is a special movement related command and hence is not included in the command dict,
+        # instead being handled with the rest of movements
+        commands = {"MOVES": self.print_moves, "GUIDE": Chess.print_control_guide,
+                    "RESET": self.reset_board, "QUIT": None}
 
+        player_number = 1
         Chess.print_control_guide()
 
         while True:
-            break
-    
-    
+            self.print_board()
 
+            current_coord = input("Chose a piece to move: ")
+            current_coord = current_coord.upper()
+
+            if current_coord in commands:
+                if current_coord == "QUIT":
+                    print("Exiting game...")
+                    break
+
+                commands[current_coord]()
+                continue
+
+            
+
+    
+    
+def main() -> None:
+    game = Chess()
+    game.play()
 
 if __name__ == "__main__":
-    Chess.print_control_guide()
+    main()
