@@ -1,3 +1,4 @@
+from shutil import move
 import coordinate_conversion as convert
 import numpy as np
 from colours import Colours
@@ -65,7 +66,12 @@ class Chess():
         print(self.board, end = "\n\n")
 
     def move_piece(self, start_coord: str, move_coord: str, player: int) -> bool:
-        pass
+        """
+        Moves a piece in the current instance's `self.board` variable. Updates the moves list.
+        Contains error checking for move inputs. Returns `True` if piece successfully moved
+        else `False`.
+        """
+        
 
     def play(self) -> None:
         """
@@ -83,7 +89,7 @@ class Chess():
             self.print_board()
 
             start_coord = input("Chose a piece to move: ")
-            start_coord = start_coord.upper()
+            start_coord = start_coord.upper()            
 
             if start_coord in commands:
                 if start_coord == "QUIT":
@@ -95,15 +101,37 @@ class Chess():
 
             if start_coord == "CASTLE":
                 move_coord = input("King (K) or Queen (Q) side: ")
+                move_coord = move_coord.upper()
+
+                if move_coord != 'K' and move_coord != 'Q':
+                    print(Colours.FAIL + Colours.BOLD + "\nInvalid CASTLE command!" + Colours.ENDC)
+                    print(f"Player {player_number} please try again.", end = "\n\n")
+                    input("Press [ENTER] to continue...\n")
+                    continue
+
             else:
+                if not convert.valid_coord(start_coord):
+                    print(Colours.FAIL + Colours.BOLD + "\nInvalid start co-ordinate!" + Colours.ENDC)
+                    print(f"Player {player_number} please try again.", end = "\n\n")
+                    input("Press [ENTER] to continue...\n")
+                    continue
+
                 move_coord = input("Move piece where: ")
+                move_coord = move_coord.upper()
+
+                if not convert.valid_coord(move_coord):
+                    print(Colours.FAIL + Colours.BOLD + "\nInvalid move co-ordinate!" + Colours.ENDC)
+                    print(f"Player {player_number} please try again.", end = "\n\n")
+                    input("Press [ENTER] to continue...\n")
+                    continue
             
             valid_move = self.move_piece(start_coord, move_coord, player_number)
 
             if valid_move:
                 player_number = 2 if player_number == 1 else 1
             else:
-                print(f"Player {player_number} pleaes try again...")
+                print(f"Player {player_number} please try again.", end = "\n\n")
+                input("Press [ENTER] to continue...\n")
 
              
     
