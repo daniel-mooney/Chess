@@ -1,4 +1,4 @@
-def grid_coord_to_num_coord(coord: str):
+def grid_coord_to_num_coord(coord: str) -> int:
     """
     Converts a grid co-ordinate into a numeric co-ordinate used to control movement
     """
@@ -9,7 +9,7 @@ def grid_coord_to_num_coord(coord: str):
 
     return (row * 10) + column
 
-def grid_coord_to_index(coord: str):
+def grid_coord_to_index(coord: str) -> tuple(int, int):
     """
     Returns a tuple `(row, column)` for a given coordinate in the board matrix
     """
@@ -33,7 +33,7 @@ def num_coord_to_index(num_coord: int):
 
     return (row, column)
 
-def index_to_num_coord(row: int, column: int):
+def index_to_num_coord(row: int, column: int) -> int:
     """
     Converts a row, column pair into the corresponding num_coord used for movement control.
     """
