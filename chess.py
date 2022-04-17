@@ -152,7 +152,7 @@ class Chess():
 
              
     
-def main() -> None:
+def main():
     game = Chess()
     game.play()
 
