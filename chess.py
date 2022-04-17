@@ -1,4 +1,4 @@
-from shutil import move
+import movement_control as ctrl
 import coordinate_conversion as convert
 import numpy as np
 from colours import Colours
@@ -36,7 +36,7 @@ class Chess():
 
         self.moves = []
 
-        print("The game has been reset!")
+        print("The game has been reset!", end = "\n\n")
 
     def print_control_guide() -> None:
         """
@@ -63,6 +63,7 @@ class Chess():
         pass
 
     def print_board(self) -> None:
+        print()
         print(self.board, end = "\n\n")
 
     def move_piece(self, start_coord: str, move_coord: str, player: int) -> bool:
@@ -71,6 +72,20 @@ class Chess():
         Contains error checking for move inputs. Returns `True` if piece successfully moved
         else `False`.
         """
+        if not ctrl.valid_piece(start_coord, player, self.board):
+            row, col = convert.grid_coord_to_index(start_coord)
+            print(Colours.FAIL + Colours.BOLD + f"\nInvalid piece selection at {start_coord}: {self.board[row][col]}" + Colours.ENDC)
+            return False
+        
+        if not ctrl.valid_movement(start_coord, move_coord, self.board):
+            return False
+
+        return True
+
+
+        # Valid movement
+        # valid path
+        # piece not pinned
         
 
     def play(self) -> None:
@@ -84,6 +99,7 @@ class Chess():
 
         player_number = 1
         Chess.print_control_guide()
+        input("Press [ENTER] to begin...")
 
         while True:
             self.print_board()
@@ -97,6 +113,7 @@ class Chess():
                     break
 
                 commands[start_coord]()
+                input("Press [ENTER] to continue...")
                 continue
 
             if start_coord == "CASTLE":
@@ -104,25 +121,25 @@ class Chess():
                 move_coord = move_coord.upper()
 
                 if move_coord != 'K' and move_coord != 'Q':
-                    print(Colours.FAIL + Colours.BOLD + "\nInvalid CASTLE command!" + Colours.ENDC)
+                    print(Colours.FAIL + Colours.BOLD + f"\nInvalid CASTLE command: {move_coord}" + Colours.ENDC)
                     print(f"Player {player_number} please try again.", end = "\n\n")
-                    input("Press [ENTER] to continue...\n")
+                    input("Press [ENTER] to continue...")
                     continue
 
             else:
                 if not convert.valid_coord(start_coord):
-                    print(Colours.FAIL + Colours.BOLD + "\nInvalid start co-ordinate!" + Colours.ENDC)
+                    print(Colours.FAIL + Colours.BOLD + f"\nInvalid start co-ordinate: {start_coord}" + Colours.ENDC)
                     print(f"Player {player_number} please try again.", end = "\n\n")
-                    input("Press [ENTER] to continue...\n")
+                    input("Press [ENTER] to continue...")
                     continue
 
                 move_coord = input("Move piece where: ")
                 move_coord = move_coord.upper()
 
                 if not convert.valid_coord(move_coord):
-                    print(Colours.FAIL + Colours.BOLD + "\nInvalid move co-ordinate!" + Colours.ENDC)
+                    print(Colours.FAIL + Colours.BOLD + f"\nInvalid move co-ordinate: {move_coord}" + Colours.ENDC)
                     print(f"Player {player_number} please try again.", end = "\n\n")
-                    input("Press [ENTER] to continue...\n")
+                    input("Press [ENTER] to continue...")
                     continue
             
             valid_move = self.move_piece(start_coord, move_coord, player_number)
@@ -131,7 +148,7 @@ class Chess():
                 player_number = 2 if player_number == 1 else 1
             else:
                 print(f"Player {player_number} please try again.", end = "\n\n")
-                input("Press [ENTER] to continue...\n")
+                input("Press [ENTER] to continue...")
 
              
     
