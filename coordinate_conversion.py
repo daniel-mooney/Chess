@@ -41,14 +41,16 @@ def index_to_num_coord(row: int, column: int):
 
     return row_num[row - 1] + column
 
-def valid_num_coord(coord: int):
+def valid_coord(coord: str) -> bool:
     """
-    Returns True if argument is a valid num_coord, else False.
+    Checks whether a chess grid co-ordinate is valid or not. Assumes the coordinate has been
+    capitalised.
     """
-    if coord %10 in [0, 9]:
+    if len(coord) != 2:
         return False
-    if coord > 88:
+    if coord[0] < 'A' or coord[0] > 'H':
         return False
-    if coord < 11:
-        return False
+    if coord[1] < '1' or coord[0] > '8':
+        return False    
+
     return True
