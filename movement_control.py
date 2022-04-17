@@ -18,3 +18,6 @@ def valid_piece(coord: str, player_number: int, board: iter) -> bool:
         return False
     
     return True
+
+def valid_movement(start_coord: str, move_coord: str, board: iter) -> bool:
+    return True
