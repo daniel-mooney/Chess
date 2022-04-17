@@ -9,7 +9,7 @@ def grid_coord_to_num_coord(coord: str) -> int:
 
     return (row * 10) + column
 
-def grid_coord_to_index(coord: str) -> tuple(int, int):
+def grid_coord_to_index(coord: str) -> tuple:
     """
     Returns a tuple `(row, column)` for a given coordinate in the board matrix
     """
@@ -21,7 +21,7 @@ def grid_coord_to_index(coord: str) -> tuple(int, int):
 
     return (row, column)
 
-def num_coord_to_index(num_coord: int):
+def num_coord_to_index(num_coord: int) -> tuple:
     """
     Converts a num_coord to the corresponding row and column matrix coordinates.
     """
@@ -50,7 +50,7 @@ def valid_coord(coord: str) -> bool:
         return False
     if coord[0] < 'A' or coord[0] > 'H':
         return False
-    if coord[1] < '1' or coord[0] > '8':
+    if coord[1] < '1' or coord[1] > '8':
         return False    
 
     return True
