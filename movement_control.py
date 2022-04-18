@@ -63,14 +63,17 @@ def pawn_movement(start_num: int, move_num: int, board: iter) -> bool:
     return move_diff == 10 or (first_move and move_diff == 20)
 
 def knight_movement(start_num: int, move_num: int, board: iter) -> bool:
-
     valid_movements = [8, 12, 19, 21]
     move_diff = abs(move_num - start_num)
 
     return move_diff in valid_movements
 
 def bishop_movement(start_num: int, move_num: int, board: iter) -> bool:
-    pass
+    # Factors of 9 or 11 define diagonal movement
+    valid_move_factors = [9, 11]
+    move_diff = move_num - start_num
+
+    return any(move_diff % fac == 0 for fac in valid_move_factors) 
 
 def rook_movement(start_num: int, move_num: int, board: iter) -> bool:
     pass
