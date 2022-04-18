@@ -9,7 +9,7 @@ def grid_coord_to_num_coord(coord: str) -> int:
 
     return (row * 10) + column
 
-def grid_coord_to_index(coord: str) -> tuple:
+def grid_coord_to_index(coord: str) -> tuple[int, int]:
     """
     Returns a tuple `(row, column)` for a given coordinate in the board matrix
     """
@@ -21,7 +21,7 @@ def grid_coord_to_index(coord: str) -> tuple:
 
     return (row, column)
 
-def num_coord_to_index(num_coord: int) -> tuple:
+def num_coord_to_index(num_coord: int) -> tuple[int, int]:
     """
     Converts a num_coord to the corresponding row and column matrix coordinates.
     """
