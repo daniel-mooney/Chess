@@ -99,5 +99,8 @@ def check_queen_movement(start_num: int, move_num: int, board: iter) -> bool:
     return any(move_diff % fac == 0 for fac in valid_move_factors) or move_diff <= 7
 
 def check_king_movement(start_num: int, move_num: int, board: iter) -> bool:
-    pass
+    valid_move = [1, 9, 10, 11]
+    move_diff = abs(move_num - start_num)
+
+    return move_diff in valid_move
 
