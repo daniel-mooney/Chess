@@ -8,7 +8,7 @@ def valid_piece(coord: str, player_number: int, board: iter) -> bool:
     pieces = ['P', 'N', 'B', 'R', 'Q', 'K']
 
     row, column = convert.grid_coord_to_index(coord)
-    piece: str = board[row][column]
+    piece = board[row][column]
 
     if piece.upper() not in pieces:
         return False
@@ -40,7 +40,28 @@ def valid_movement(start_coord: str, move_coord: str, board: iter) -> bool:
    
 # Movement Functions
 def pawn_movement(start_num: int, move_num: int, board: iter) -> bool:
-    pass
+    # Lowercase pawns are player 1, Uppercase is player 2
+
+    i, j = convert.num_coord_to_index(start_num)
+    player = 1 if board[i][j].islower() else 2
+    direction = 1 if player == 1 else -1        # Travelling up or down the board, up is positive
+
+    capture_movements = [9, 11]
+    move_diff = (move_num - start_num) * direction
+
+    if move_diff in capture_movements:
+        m, n = convert.num_coord_to_index(move_num)
+        capture_sq = board[m][n]
+
+        return capture_sq != '0'
+    
+    # Check if pawn is being moved for the first time
+    if player == 1:
+        first_move = (start_num // 10) == 2
+    else:
+        first_move = (start_num // 10) == 7
+
+    return move_diff == 10 or (first_move and move_diff == 20)
 
 def knight_movement(start_num: int, move_num: int, board: iter) -> bool:
     pass
