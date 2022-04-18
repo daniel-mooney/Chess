@@ -41,7 +41,6 @@ def valid_movement(start_coord: str, move_coord: str, board: iter) -> bool:
 # Movement Functions
 def pawn_movement(start_num: int, move_num: int, board: iter) -> bool:
     # Lowercase pawns are player 1, Uppercase is player 2
-
     i, j = convert.num_coord_to_index(start_num)
     player = 1 if board[i][j].islower() else 2
     direction = 1 if player == 1 else -1        # Travelling up or down the board, up is positive
@@ -64,7 +63,11 @@ def pawn_movement(start_num: int, move_num: int, board: iter) -> bool:
     return move_diff == 10 or (first_move and move_diff == 20)
 
 def knight_movement(start_num: int, move_num: int, board: iter) -> bool:
-    pass
+
+    valid_movements = [8, 12, 19, 21]
+    move_diff = abs(move_num - start_num)
+
+    return move_diff in valid_movements
 
 def bishop_movement(start_num: int, move_num: int, board: iter) -> bool:
     pass
