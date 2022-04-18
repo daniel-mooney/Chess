@@ -33,13 +33,15 @@ def valid_movement(start_coord: str, move_coord: str, board: iter) -> bool:
     start_num = convert.grid_coord_to_num_coord(start_coord)
     move_num = convert.grid_coord_to_num_coord(move_coord)
 
-    movement_functions = {'P': pawn_movement, 'N': knight_movement, 'B': bishop_movement,
-                        'R': rook_movement, 'Q': queen_movement, 'K': king_movement}
+    movement_functions = {'P': check_pawn_movement, 'N': check_knight_movement, 'B': check_bishop_movement,
+                        'R': check_rook_movement, 'Q': check_queen_movement, 'K': check_king_movement}
     
+    # Need to check for en pesant
+
     return movement_functions[piece](start_num, move_num, board)
    
 # Movement Functions
-def pawn_movement(start_num: int, move_num: int, board: iter) -> bool:
+def check_pawn_movement(start_num: int, move_num: int, board: iter) -> bool:
     # Lowercase pawns are player 1, Uppercase is player 2
     i, j = convert.num_coord_to_index(start_num)
     player = 1 if board[i][j].islower() else 2
@@ -62,25 +64,40 @@ def pawn_movement(start_num: int, move_num: int, board: iter) -> bool:
 
     return move_diff == 10 or (first_move and move_diff == 20)
 
-def knight_movement(start_num: int, move_num: int, board: iter) -> bool:
+def check_knight_movement(start_num: int, move_num: int, board: iter) -> bool:
     valid_movements = [8, 12, 19, 21]
     move_diff = abs(move_num - start_num)
 
     return move_diff in valid_movements
 
-def bishop_movement(start_num: int, move_num: int, board: iter) -> bool:
+def check_bishop_movement(start_num: int, move_num: int, board: iter) -> bool:
     # Factors of 9 or 11 define diagonal movement
     valid_move_factors = [9, 11]
     move_diff = move_num - start_num
 
+    if move_diff == 0:
+        return False
+
     return any(move_diff % fac == 0 for fac in valid_move_factors) 
 
-def rook_movement(start_num: int, move_num: int, board: iter) -> bool:
-    pass
+def check_rook_movement(start_num: int, move_num: int, board: iter) -> bool:
+    # A move_diff of 10 represents movement up and down a file
+    move_diff = abs(move_num - start_num)
 
-def queen_movement(start_num: int, move_num: int, board: iter) -> bool:
-    pass
+    if move_diff == 0:
+        return False
 
-def king_movement(start_num: int, move_num: int, board: iter) -> bool:
+    return (move_diff % 10) == 0 or move_diff <= 7
+
+def check_queen_movement(start_num: int, move_num: int, board: iter) -> bool:
+    valid_move_factors = [9, 10, 11]
+    move_diff = abs(move_num - start_num)
+
+    if move_diff == 0:
+        return False
+    
+    return any(move_diff % fac == 0 for fac in valid_move_factors) or move_diff <= 7
+
+def check_king_movement(start_num: int, move_num: int, board: iter) -> bool:
     pass
 
