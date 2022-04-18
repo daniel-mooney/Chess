@@ -36,7 +36,7 @@ class Chess():
 
         self.moves = []
 
-        print("The game has been reset!", end = "\n\n")
+        print("The game has been reset!", end="\n\n")
 
     def print_control_guide() -> None:
         """
@@ -46,25 +46,24 @@ class Chess():
         key = 'Key: R - Rook, N - Knight, B - Bishop, K - King, Q - Queen, P - Pawn.'
 
         print('\nLowercase is player 1, uppercase is player 2, player 1 goes first.')
-        print(key, end = '\n\n')
+        print(key, end='\n\n')
         print(Colours.BOLD + Colours.GREEN + "Control Guide" + Colours.ENDC)
         print("-------------")
         print("Choose the piece you wish to move when prompted, make sure the case type matches your player type.")
         print("Enter the square you wish to move that piece to.", end="\n\n")
-        print("When prompted to chose a piece to move, you may enter any one of the commands below instead...", end = "\n\n")
+        print("When prompted to chose a piece to move, you may enter any one of the commands below instead...", end="\n\n")
         print("Commands:")
         print(Colours.BOLD + "CASTLE" + Colours.ENDC + " - when you wish to castle your king.")
         print(Colours.BOLD + "MOVES" + Colours.ENDC + " - prints a list of all previous moves.")
         print(Colours.BOLD + "QUIT" + Colours.ENDC + " - ends the current game and closes the program.")
         print(Colours.BOLD + "RESET" + Colours.ENDC + " - resets the current game being played.")
-        print(Colours.BOLD + "GUIDE" + Colours.ENDC + " - prints the control guide to terminal.", end = "\n\n")
+        print(Colours.BOLD + "GUIDE" + Colours.ENDC + " - prints the control guide to terminal.", end="\n\n")
     
     def print_moves(self) -> None:
         pass
 
     def print_board(self) -> None:
-        print()
-        print(self.board, end = "\n\n")
+        print(f"\n{self.board}", end="\n\n")
 
     def move_piece(self, start_coord: str, move_coord: str, player: int) -> bool:
         """
@@ -72,12 +71,13 @@ class Chess():
         Contains error checking for move inputs. Returns `True` if piece successfully moved
         else `False`.
         """
+        row, col = convert.grid_coord_to_index(start_coord)
         if not ctrl.valid_piece(start_coord, player, self.board):
-            row, col = convert.grid_coord_to_index(start_coord)
             print(Colours.FAIL + Colours.BOLD + f"\nInvalid piece selection at {start_coord}: {self.board[row][col]}" + Colours.ENDC)
             return False
         
         if not ctrl.valid_movement(start_coord, move_coord, self.board):
+            print(Colours.FAIL + Colours.BOLD + f"\nCannot move {self.board[row][col]}({start_coord}) to {move_coord}" + Colours.ENDC)
             return False
 
         return True
@@ -122,14 +122,14 @@ class Chess():
 
                 if move_coord != 'K' and move_coord != 'Q':
                     print(Colours.FAIL + Colours.BOLD + f"\nInvalid CASTLE command: {move_coord}" + Colours.ENDC)
-                    print(f"Player {player_number} please try again.", end = "\n\n")
+                    print(f"Player {player_number} please try again.", end="\n\n")
                     input("Press [ENTER] to continue...")
                     continue
 
             else:
                 if not convert.valid_coord(start_coord):
                     print(Colours.FAIL + Colours.BOLD + f"\nInvalid start co-ordinate: {start_coord}" + Colours.ENDC)
-                    print(f"Player {player_number} please try again.", end = "\n\n")
+                    print(f"Player {player_number} please try again.", end="\n\n")
                     input("Press [ENTER] to continue...")
                     continue
 
@@ -138,7 +138,7 @@ class Chess():
 
                 if not convert.valid_coord(move_coord):
                     print(Colours.FAIL + Colours.BOLD + f"\nInvalid move co-ordinate: {move_coord}" + Colours.ENDC)
-                    print(f"Player {player_number} please try again.", end = "\n\n")
+                    print(f"Player {player_number} please try again.", end="\n\n")
                     input("Press [ENTER] to continue...")
                     continue
             
@@ -147,7 +147,7 @@ class Chess():
             if valid_move:
                 player_number = 2 if player_number == 1 else 1
             else:
-                print(f"Player {player_number} please try again.", end = "\n\n")
+                print(f"Player {player_number} please try again.", end="\n\n")
                 input("Press [ENTER] to continue...")
 
              
