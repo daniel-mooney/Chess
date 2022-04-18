@@ -37,7 +37,6 @@ def valid_movement(start_coord: str, move_coord: str, board: iter) -> bool:
                         'R': check_rook_movement, 'Q': check_queen_movement, 'K': check_king_movement}
     
     # Need to check for en pesant
-
     return movement_functions[piece](start_num, move_num, board)
    
 # Movement Functions
