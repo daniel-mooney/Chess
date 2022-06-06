@@ -41,6 +41,10 @@ def valid_movement(start_coord: str, move_coord: str, board: iter) -> bool:
    
 # Movement Functions
 def check_pawn_movement(start_num: int, move_num: int, board: iter) -> bool:
+    """
+    Checks if the movement defined by start_num to move_num is a valid movement direction for a pawn.
+    """
+
     # Lowercase pawns are player 1, Uppercase is player 2
     i, j = convert.num_coord_to_index(start_num)
     player = 1 if board[i][j].islower() else 2
@@ -64,12 +68,18 @@ def check_pawn_movement(start_num: int, move_num: int, board: iter) -> bool:
     return move_diff == 10 or (first_move and move_diff == 20)
 
 def check_knight_movement(start_num: int, move_num: int, board: iter) -> bool:
+    """
+    Checks if the movement defined by start_num to move_num is a valid movement direction for a knight.
+    """
     valid_movements = [8, 12, 19, 21]
     move_diff = abs(move_num - start_num)
 
     return move_diff in valid_movements
 
 def check_bishop_movement(start_num: int, move_num: int, board: iter) -> bool:
+    """
+    Checks if the movement defined by start_num to move_num is a valid movement direction for a bishop.
+    """
     # Factors of 9 or 11 define diagonal movement
     valid_move_factors = [9, 11]
     move_diff = move_num - start_num
@@ -80,6 +90,9 @@ def check_bishop_movement(start_num: int, move_num: int, board: iter) -> bool:
     return any(move_diff % fac == 0 for fac in valid_move_factors) 
 
 def check_rook_movement(start_num: int, move_num: int, board: iter) -> bool:
+    """
+    Checks if the movement defined by start_num to move_num is a valid movement direction for a rook.
+    """
     # A move_diff of 10 represents movement up and down a file
     move_diff = abs(move_num - start_num)
 
@@ -89,6 +102,9 @@ def check_rook_movement(start_num: int, move_num: int, board: iter) -> bool:
     return (move_diff % 10) == 0 or move_diff <= 7
 
 def check_queen_movement(start_num: int, move_num: int, board: iter) -> bool:
+    """
+    Checks if the movement defined by start_num to move_num is a valid movement direction for a queen.
+    """
     valid_move_factors = [9, 10, 11]
     move_diff = abs(move_num - start_num)
 
@@ -103,3 +119,6 @@ def check_king_movement(start_num: int, move_num: int, board: iter) -> bool:
 
     return move_diff in valid_move
 
+
+def valid_path(start_coord: str, move_coord: str, board: iter) -> bool:
+    pass
